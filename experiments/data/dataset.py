@@ -9,11 +9,13 @@ from torchvision import transforms
 
 
 class Experience(Dataset):
-    def __init__(self, data_dir, obs_len=100, obs_dim=4):
+    def __init__(self, data_dirs, obs_len=100, obs_dim=4):
         self.episodes = []
 
         # Load experience data from data_dir
-        episode_dirs = [os.path.join(data_dir, e) for e in os.listdir(data_dir)]
+        episode_dirs = []
+        for data_dir in data_dirs:
+            episode_dirs += [os.path.join(data_dir, e) for e in os.listdir(data_dir)]
         for episode_dir in episode_dirs:
             actions = np.loadtxt(os.path.join(episode_dir, 'actions.txt'))
             observations = np.loadtxt(os.path.join(episode_dir, 'observations.txt'))
